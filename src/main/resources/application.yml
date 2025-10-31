@@ -1,0 +1,49 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  redis:
+    host: localhost
+    port: 6379
+
+  cache:
+    type: redis
+
+kafka:
+  bootstrap-servers: localhost:9092
+  consumer:
+    group-id: order-service
+    auto-offset-reset: earliest
+
+server:
+  port: 8080
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+      apache:
+        kafka:
+          clients:
+            NetworkClient: ERROR
+          consumer:
+            ConsumerConfig: ERROR
+
+security:
+  oauth2:
+    resourceserver:
+      jwt:
+        jwk-set-uri: none
+        secret: your-super-secret-key

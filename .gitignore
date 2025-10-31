@@ -1,0 +1,19 @@
+# Java / Maven
+target/
+*.class
+*.jar
+*.war
+*.iml
+
+# IntelliJ / VSCode
+.idea/
+.vscode/
+
+# OS files
+.DS_Store
+
+# Logs
+*.log
+
+# Docker
+*.pid
