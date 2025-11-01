@@ -37,9 +37,9 @@ logging:
       apache:
         kafka:
           clients:
-            NetworkClient: ERROR
+            NetworkClient: DEBUG
           consumer:
-            ConsumerConfig: ERROR
+            ConsumerConfig: DEBUG
 
 security:
   oauth2:
