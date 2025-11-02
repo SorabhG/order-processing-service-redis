@@ -1,24 +1,35 @@
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:ordersdb
     driverClassName: org.h2.Driver
     username: sa
-    password: password
+    password:
+    platform: h2
+    hikari:
+      maximum-pool-size: 5
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
 
-  redis:
-    host: localhost
-    port: 6379
+  data:
+    redis:
+      host: redis
+      port: 6379
 
   cache:
     type: redis
 
 kafka:
-  bootstrap-servers: localhost:9092
+  bootstrap-servers: kafka:9092
+  producer:
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.apache.kafka.common.serialization.StringSerializer # keep StringSerializer for JSON string
   consumer:
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    properties:
+      spring.json.trusted.packages: "*"
     group-id: order-service
     auto-offset-reset: earliest
 
@@ -37,9 +48,9 @@ logging:
       apache:
         kafka:
           clients:
-            NetworkClient: DEBUG
+            NetworkClient: ERROR
           consumer:
-            ConsumerConfig: DEBUG
+            ConsumerConfig: ERROR
 
 security:
   oauth2:

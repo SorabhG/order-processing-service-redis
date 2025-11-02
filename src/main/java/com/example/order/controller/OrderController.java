@@ -19,13 +19,15 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<OrderResponse> createOrder(@Valid @RequestBody OrderRequest request) {
-        return ResponseEntity.ok(orderService.createOrder(request, "demo-user"));
+        OrderResponse response = orderService.createOrder(request, "demo-user");
+        orderService.evictCache(response.getId()); // ensure cache is fresh
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<OrderResponse> getOrder(@PathVariable Long id, @AuthenticationPrincipal Jwt jwt) {
         System.out.println("JWT Subject: " + jwt.getSubject());
-        return ResponseEntity.ok(orderService.getOrderById(id));
+        return ResponseEntity.ok(orderService.getOrder(id));
     }
 
     @GetMapping("/ids")
